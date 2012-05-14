@@ -2,7 +2,6 @@ package com.karmawhore;
 
 import android.app.Service;
 import android.content.Intent;
-import android.os.Bundle;
 import android.os.IBinder;
 
 public class SyncService extends Service {
