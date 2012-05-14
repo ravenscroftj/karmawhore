@@ -49,7 +49,7 @@ class Quickauth
 		$this->redirects = $this->ci->config->item('redirects', 'quickauth');
 
 		//set up the login redirect
-		$this->ci->session->set_flashdata("REDIRECT_TARGET",
+		$this->ci->db_session->set_flashdata("REDIRECT_TARGET",
 		$this->redirects['successful_login']);
 	}
 
@@ -68,11 +68,11 @@ class Quickauth
 		$q = $this->ci->db->get($this->_tables['users']);
 		if ($q->num_rows() > 0) {
 			$a = $q->row_array();
-			$session_data = array (
+			$db_session_data = array (
 				'userid' => $a['id']
 			);
 
-			$this->ci->session->set_userdata($session_data);
+			$this->ci->db_session->set_userdata($db_session_data);
 			return true;
 		} else {
 			ui_set_error($this->locale['invalid_login_credentials']);
@@ -111,14 +111,14 @@ class Quickauth
 	}
 
 	/**
-	 * Log a user out by destroying their session, then set a ui message and
+	 * Log a user out by destroying their db_session, then set a ui message and
 	 * return
 	 *
 	 * @return <bool> True, to symbolise a succesful logout. Plus ui_set_message
 	 */
 	function logout()
 	{
-		$this->ci->session->destroy();
+		$this->ci->db_session->destroy();
 		ui_set_message($this->locale['logged_out']);
 		return true;
 	}
@@ -185,7 +185,7 @@ class Quickauth
 	 */
 	function user($id = null)
 	{
-		if ($id == null) $id = $this->ci->session->userdata('userid');
+		if ($id == null) $id = $this->ci->db_session->userdata('userid');
 
 		// If the user is not signed in then assign them guest credentials and
 		// return
@@ -209,14 +209,14 @@ class Quickauth
 	 * Set a user attribute in the database - overwrites if necessary
 	 * 
 	 * @param string $id <p>The ID of the user to get the attribute for. 
-	 * If null, this value is filled using the session userdata. </p>
+	 * If null, this value is filled using the db_session userdata. </p>
 	 * @param string $key <p>The name of the attribute being set</p>
 	 * @param string $value <p>The value of the attribute</p>
 	 * @return boolean <p>Returns true if the parameter was set ok</p>
 	 */
 	function set_user_attribute($id = null, $key, $value){
 		//get the ID of the user
-		if ($id == null) $id = $this->ci->session->userdata('userid');
+		if ($id == null) $id = $this->ci->db_session->userdata('userid');
 
 		$data = array("attr_value" => $value);
 		
@@ -235,14 +235,14 @@ class Quickauth
 	 * Get an attribute value associated with a given user
 	 * 
 	 * @param string $id <p>The ID of the user to get the attribute for. 
-	 * If null, this value is filled using the session userdata. </p>
+	 * If null, this value is filled using the db_session userdata. </p>
 	 * @param string $key <p>The name of the attribute to get</p>
 	 * @return string $value <p>Returns the value of the attribute or 
 	 * null if not set</p>
 	 */
 	function get_user_attribute($id = null, $key){
 		//get the ID of the user
-		if ($id == null) $id = $this->ci->session->userdata('userid');
+		if ($id == null) $id = $this->ci->db_session->userdata('userid');
 	}
 
 	/**
@@ -252,7 +252,7 @@ class Quickauth
 	 */
 	function logged_in()
 	{
-		$id = $this->ci->session->userdata('userid');
+		$id = $this->ci->db_session->userdata('userid');
 		if ($id) {
 			return true;
 		}
@@ -282,7 +282,7 @@ class Quickauth
 			redirect($this->redirects['login']);
 		}
 
-		$userid = $this->ci->session->userdata('userid');
+		$userid = $this->ci->db_session->userdata('userid');
 		$this->ci->db->where('userid', $userid);
 		$q = $this->ci->db->get($this->_tables['group_memberships']);
 		$groups = $q->result_array();

@@ -9,14 +9,12 @@ class Dashboard extends CI_Controller {
 		$this->load->library("quickauth");
 		
 		if(!$this->quickauth->logged_in()){
-			header(site_url("auth/login/"));
+			header("Location: ".site_url("auth/login/"));
 		}
 		
 	}
 	
 	function index(){
-		
-
 		
 	}
 	
