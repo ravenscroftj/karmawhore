@@ -41,8 +41,12 @@ class Auth extends CI_Controller {
 				$_POST['password']);
 		
 		if($json){
-			print $this->db_session->userdata('session_id');
-			exit;
+			
+			if($result){
+				print $this->db_session->userdata('session_id');
+			}else{
+				print "Unknown user/password combination.";
+			}
 		
 		}else if($result) {
 			header("Location: ".site_url("dashboard"));
