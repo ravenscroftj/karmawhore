@@ -11,7 +11,6 @@ class Auth extends CI_Controller {
 		parent::__construct();
 		$this->load->database();
 		$this->load->helper("ui");
-		$this->load->library("session");
 		$this->load->library("quickauth");
 	}
 	
@@ -41,11 +40,11 @@ class Auth extends CI_Controller {
 		$result = $this->quickauth->login($_POST['username'], 
 				$_POST['password']);
 		
-		if($json)
-			print json_encode(array("success" => $result));
+		if($json){
+			print $this->db_session->userdata('session_id');
+			exit;
 		
-		
-		else if($result) {
+		}else if($result) {
 			header("Location: ".site_url("dashboard"));
 			exit;
 		}else{
