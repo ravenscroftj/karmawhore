@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import com.karmawhore.Constants;
 import com.karmawhore.R;
+import com.karmawhore.util.NetworkUtil;
 
 /**
  * @author Mat
@@ -176,13 +177,19 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity {
 	private void onAuthenticationCancel() {
 		mAuthTask = null;
 	}
+	
+	
 
 	public class UserLoginTask extends AsyncTask<Void, Void, String> {
 
 		@Override
 		protected String doInBackground(Void... params) {
 			// Authenticate the user in another class
-			return null;
+			try{
+			return NetworkUtil.authenticate(mUsername, mPassword);
+			} catch (Exception e){
+				return null;
+			}
 		}
 
 		@Override

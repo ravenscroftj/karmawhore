@@ -9,8 +9,8 @@
 *.class
 
 # generated files
-bin/
-gen/
+/Karmawhore/bin/
+/Karmawhore/gen/
 .metadata/
 
 # Local configuration file (sdk path, etc)

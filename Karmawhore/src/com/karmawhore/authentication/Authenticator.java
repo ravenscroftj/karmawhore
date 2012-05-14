@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 
 import com.karmawhore.Constants;
+import com.karmawhore.util.NetworkUtil;
 
 public class Authenticator extends AbstractAccountAuthenticator {
 
@@ -61,7 +62,7 @@ public class Authenticator extends AbstractAccountAuthenticator {
 		final AccountManager accountManager = AccountManager.get(mContext);
 		final String password = accountManager.getPassword(account);
 		if (password != null) {
-			final String authToken = "13324333fkdsf"; //TODO: network utility to actually authenticate
+			final String authToken = NetworkUtil.authenticate(account.name, password);
 			if(!TextUtils.isEmpty(authToken)) {
 				final Bundle result = new Bundle();
 				result.putString(AccountManager.KEY_ACCOUNT_NAME, account.name);
