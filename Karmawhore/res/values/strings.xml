@@ -3,5 +3,9 @@
 
     <string name="hello">Hello World, MainActivity!</string>
     <string name="app_name">Karmawhore</string>
+    <string name="login_edit_password_hint">Password</string>
+    <string name="login_edit_username_hint">Username</string>
+    <string name="login_text_helpmessage_default">You must login to continue.</string>
+    <string name="login_button_ok">Sign In</string>
 
 </resources>
