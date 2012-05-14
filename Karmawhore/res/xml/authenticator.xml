@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<account-authenticator android:label="@string/appname" android:smallIcon="@drawable/ic_launcher"
+    android:icon="@drawable/ic_launcher"
+    android:accountType="com.karmawhore.authentication"
+    xmlns:android="http://schemas.android.com/apk/res/android" />
