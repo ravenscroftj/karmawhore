@@ -1,25 +1,17 @@
-# Compiled source #
-###################
-*.com
+# built application files
+*.apk
+*.ap_
+
+# files for the dex VM
+*.dex
+
+# Java class files
 *.class
-*.dll
-*.exe
-*.o
-*.so
 
-# Logs and databases #
-######################
-*.log
-*.sql
-*.sqlite
+# generated files
+bin/
+gen/
+.metadata/
 
-# OS generated files #
-######################
-.DS_Store*
-ehthumbs.db
-Icon?
-Thumbs.db
-
-gen
-
-.metadata
+# Local configuration file (sdk path, etc)
+local.properties

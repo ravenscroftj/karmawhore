@@ -5,46 +5,63 @@
     android:layout_height="match_parent"
     android:layout_margin="16dp"
     android:orientation="vertical" >
-
-    <EditText
-        android:id="@+id/login_edit_username"
+
+    <ScrollView
+        android:id="@+id/login_scroll_content"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/login_edit_password_hint"
-        android:inputType="textEmailAddress"
-        android:text="@string/login_edit_username_hint" android:layout_marginTop="8dp">
+        android:layout_height="wrap_content" >
+
+        <LinearLayout
+            android:id="@+id/login_textfields"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
 
-        <requestFocus />
-    </EditText>
-
-    <EditText
-        android:id="@+id/login_edit_password"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPassword"
-        android:text="@string/login_edit_password_hint" android:layout_marginTop="8dp"/>
-
-    <TextView
-        android:id="@+id/login_text_helpmessage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/login_text_helpmessage_default"
-        android:textAppearance="?android:attr/textAppearanceSmall" android:layout_marginTop="8dp"/>
+            <EditText
+                android:id="@+id/login_edit_username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:ems="10"
+                android:hint="@string/login_edit_username_hint"
+                android:inputType="textEmailAddress" >
+
+                <requestFocus />
+
+            </EditText>
+
+            <EditText
+                android:id="@+id/login_edit_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:ems="10"
+                android:hint="@string/login_edit_password_hint"
+                android:imeOptions="actionDone"
+                android:inputType="textPassword" />
+
+            <TextView
+                android:id="@+id/login_text_helpmessage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/login_text_helpmessage_default"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+        </LinearLayout>
+
+    </ScrollView>
 
     <LinearLayout
         android:id="@+id/login_layout_buttons"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="bottom|right" >
+        android:layout_height="0dip"
+        android:gravity="bottom|right" android:layout_weight="1">
 
         <Button
             android:id="@+id/login_button_ok"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/login_button_ok" />
+            android:text="@string/login_button_ok"/>
 
     </LinearLayout>
 
