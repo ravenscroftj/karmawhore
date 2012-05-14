@@ -7,5 +7,6 @@
     <string name="login_edit_username_hint">Username</string>
     <string name="login_text_helpmessage_default">You must login to continue.</string>
     <string name="login_button_ok">Sign In</string>
+    <string name="appname">Karmawhore</string>
 
 </resources>
