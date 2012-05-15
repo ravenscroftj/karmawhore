@@ -14,7 +14,6 @@ import android.content.ContentResolver;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.provider.ContactsContract;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -52,18 +51,12 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity {
 	/** Keep track of the login task so can cancel it if requested */
 	private UserLoginTask mAuthTask = null;
 
-	/** Keep track of the progress dialog so we can dismiss it */
-	//private ProgressDialog mProgressDialog = null;
-
 	/**
 	 * If set we are just checking that the user knows their credentials; this
 	 * doesn't cause the user's password or authToken to be changed on the
 	 * device.
 	 */
 	private Boolean mConfirmCredentials = false;
-
-	/** for posting authentication attempts back to UI thread */
-	//private final Handler mHandler = new Handler();
 
 	private TextView mMessage;
 
