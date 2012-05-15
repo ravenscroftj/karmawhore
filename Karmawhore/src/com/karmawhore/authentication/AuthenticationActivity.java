@@ -53,7 +53,7 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity {
 	private UserLoginTask mAuthTask = null;
 
 	/** Keep track of the progress dialog so we can dismiss it */
-	private ProgressDialog mProgressDialog = null;
+	//private ProgressDialog mProgressDialog = null;
 
 	/**
 	 * If set we are just checking that the user knows their credentials; this
@@ -63,7 +63,7 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity {
 	private Boolean mConfirmCredentials = false;
 
 	/** for posting authentication attempts back to UI thread */
-	private final Handler mHandler = new Handler();
+	//private final Handler mHandler = new Handler();
 
 	private TextView mMessage;
 
