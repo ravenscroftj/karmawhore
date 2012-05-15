@@ -118,13 +118,11 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity {
 		TextWatcher fieldValidator = new TextWatcher(){
 
 			public void afterTextChanged(Editable s) {
-				// TODO Auto-generated method stub
 				
 			}
 
 			public void beforeTextChanged(CharSequence s, int start, int count,
 					int after) {
-				// TODO Auto-generated method stub
 				
 			}
 
