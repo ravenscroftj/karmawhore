@@ -30,10 +30,7 @@
                         android:layout_marginTop="8dp"
                         android:ems="10"
                         android:hint="@string/login_edit_username_hint"
-                        android:inputType="textEmailAddress" >
-
-                        <requestFocus />
-                    </EditText>
+                        android:inputType="textEmailAddress" />
 
                     <EditText
                         android:id="@+id/login_edit_password"
@@ -50,7 +47,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:text="@string/login_text_helpmessage_default"
+                        android:text="@string/login_help_default"
                         android:textAppearance="?android:attr/textAppearanceSmall" />
                 </LinearLayout>
             </ScrollView>
@@ -76,29 +73,60 @@
             android:layout_width="match_parent"
             android:layout_height="fill_parent"
             android:orientation="vertical" >
-
-            <TextView
-                android:id="@+id/login_signing_in_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/login_signin_title"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
-
-            <ProgressBar
-                android:id="@+id/login_progress"
-                style="?android:attr/progressBarStyleHorizontal"
+
+            <ScrollView
+                android:id="@+id/login_scroll_progress"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:indeterminate="true" />
+                android:layout_height="wrap_content" >
+
+                <LinearLayout
+                    android:id="@+id/login_progress_stuff"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical" >
 
-            <TextView
-                android:id="@+id/login_signing_in_help"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="@string/login_signing_in_help"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                    <TextView
+                        android:id="@+id/login_signing_in_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/login_signin_title"
+                        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+                    <ProgressBar
+                        android:id="@+id/login_progress"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:indeterminate="true" />
+
+                    <TextView
+                        android:id="@+id/login_signing_in_help"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/login_signing_in_help"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                </LinearLayout>
+
+            </ScrollView>
+
+            <LinearLayout
+                android:id="@+id/login_progress_buttons"
+                android:layout_width="match_parent"
+                android:layout_height="0dip"
+                android:layout_weight="1"
+                android:gravity="bottom|right" >
+
+                <Button
+                    android:id="@+id/login_button_cancel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="handleLogin"
+                    android:text="@string/login_button_cancel" />
+
+            </LinearLayout>
+
         </LinearLayout>
 
     </ViewSwitcher>

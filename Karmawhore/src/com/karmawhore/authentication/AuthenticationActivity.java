@@ -19,10 +19,13 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
 import android.widget.ViewSwitcher;
 
 import com.karmawhore.Constants;
@@ -45,7 +48,7 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity {
 	public static final String PARAM_USERNAME = "username";
 
 	private static final String TAG = "Authentication Activity";
-	
+
 	/** The Intent extra to store username. */
 	public static final String PARAM_AUTHTOKEN_TYPE = "authtokenType";
 
@@ -73,9 +76,9 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity {
 	private String mUsername;
 
 	private EditText mUsernameEdit;
-	
+
 	private ViewSwitcher mViewSwitcher;
-	
+
 	private Button mSigninButton;
 
 	/** Called when the activity is first created. */
@@ -97,51 +100,61 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity {
 		mPasswordEdit = (EditText) findViewById(R.id.login_edit_password);
 		if (!TextUtils.isEmpty(mUsername))
 			mUsernameEdit.setText(mUsername);
-		mMessage.setText(getMessage());
 		mViewSwitcher = (ViewSwitcher) findViewById(R.id.login_view_switcher);
 
-		mUsernameEdit.addTextChangedListener(isValid());
-		mPasswordEdit.addTextChangedListener(isValid());
-		
+		mPasswordEdit.setOnEditorActionListener(new OnEditorActionListener() {
+
+			public boolean onEditorAction(TextView view, int actionId,
+					KeyEvent event) {
+				if (actionId == EditorInfo.IME_ACTION_DONE) {
+					handleLogin(mPasswordEdit);
+					return true;
+				} else {
+					return false;
+				}
+			}
+
+		});
+
+		mUsernameEdit.addTextChangedListener(fieldValidator());
+		mPasswordEdit.addTextChangedListener(fieldValidator());
+
 		mSigninButton = (Button) findViewById(R.id.login_button_ok);
-		
+
 	}
-	
-	public final Pattern EMAIL_ADDRESS_PATTERN = Pattern.compile(
-	          "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" +
-	          "\\@" +
-	          "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" +
-	          "(" +
-	          "\\." +
-	          "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
-	          ")+"
-	      );
-	
-	private TextWatcher isValid(){
-		TextWatcher fieldValidator = new TextWatcher(){
+
+	public final Pattern EMAIL_ADDRESS_PATTERN = Pattern
+			.compile("[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" + "\\@"
+					+ "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" + "(" + "\\."
+					+ "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" + ")+");
+
+	private TextWatcher fieldValidator() {
+		TextWatcher fieldValidator = new TextWatcher() {
 
 			public void afterTextChanged(Editable s) {
-				
+
 			}
 
 			public void beforeTextChanged(CharSequence s, int start, int count,
 					int after) {
-				
+
 			}
 
 			public void onTextChanged(CharSequence s, int start, int before,
 					int count) {
-				
-				if(EMAIL_ADDRESS_PATTERN.matcher(mUsernameEdit.getText()).matches() && mPasswordEdit.getText().length()>6){
+
+				if (EMAIL_ADDRESS_PATTERN.matcher(mUsernameEdit.getText())
+						.matches() && mPasswordEdit.getText().length() > 6) {
 					mSigninButton.setEnabled(true);
 				} else {
 					mSigninButton.setEnabled(false);
 				}
-				
-			}};
-		
+
+			}
+		};
+
 		return fieldValidator;
-		
+
 	}
 
 	@Override
@@ -166,8 +179,17 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity {
 	}
 
 	private CharSequence getMessage() {
-		// TODO Something here
-		return "Error maybe";
+		if (TextUtils.isEmpty(mUsername)) {
+			// If no username, then we ask the user to log in using an
+			// appropriate service.
+			final CharSequence msg = getText(R.string.login_invalid_username);
+			return msg;
+		} else if (TextUtils.isEmpty(mPassword)) {
+			// We have an account but no password
+			return getText(R.string.login_invalid_password);
+		} else {
+			return getText(R.string.login_help_default);
+		}
 	}
 
 	private void finishConfirmCredentials(boolean result) {
@@ -179,7 +201,7 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity {
 		setResult(RESULT_OK, intent);
 		finish();
 	}
-	
+
 	private void finishLogin(String authToken) {
 		final Account account = new Account(mUsername, Constants.ACCOUNT_TYPE);
 		if (mRequestNewAccount) {
@@ -198,8 +220,6 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity {
 		finish();
 	}
 
-	
-
 	private void onAuthenticationResult(String authToken) {
 		boolean successfull = ((authToken != null) && (authToken.length() > 0));
 
@@ -217,11 +237,10 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity {
 			Log.d(TAG, "Failed. :(");
 			if (mRequestNewAccount) {
 				// They tried to create a new account with incorrect deets
-				mMessage.setText("YOU GOT IT WRONG"); // TODO: externalise
+				mMessage.setText(getText(R.string.login_invalid_details));
 			} else {
 				// They gave us the wrong details
-				mMessage.setText("PLEASE GIVE CORRECT PASS THANKS BYE"); // TODO:
-																	// externalise
+				mMessage.setText(getText(R.string.login_invalid_password));
 			}
 		}
 	}
@@ -230,20 +249,16 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity {
 		mViewSwitcher.showPrevious();
 		mAuthTask = null;
 	}
-	
-	
 
 	public class UserLoginTask extends AsyncTask<Void, Void, String> {
-
-		
 
 		@Override
 		protected String doInBackground(Void... params) {
 			// Authenticate the user in another class
-			try{
+			try {
 				Log.d(TAG, "Beginning authentication...");
-			return NetworkUtil.authenticate(mUsername, mPassword);
-			} catch (Exception e){
+				return NetworkUtil.authenticate(mUsername, mPassword);
+			} catch (Exception e) {
 				return null;
 			}
 		}

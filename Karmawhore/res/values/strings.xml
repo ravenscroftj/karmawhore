@@ -8,7 +8,13 @@
     <string name="login_text_helpmessage_default">You must login to continue.</string>
     <string name="login_button_ok">Sign In</string>
     <string name="appname">Karmawhore</string>
-    <string name="login_signin_title">Signing in...</string>
+    <string name="login_signin_title">Signing in&#8230;</string>
     <string name="login_signing_in_help">This can take a few minutes.</string>
+    <string name="login_help_default">By signing in, you agree to let us rape your soul.</string>
+    <string name="login_invalid_username">@string/default_error</string>
+    <string name="login_invalid_password">@string/default_error</string>
+    <string name="default_error">I\'m sorry, Dave. I\'m afraid I can\'t do that.</string>
+    <string name="login_invalid_details">Your username and password don\'t match. Try again.</string>
+    <string name="login_button_cancel">Cancel</string>
 
 </resources>
