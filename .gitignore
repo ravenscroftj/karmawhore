@@ -11,6 +11,8 @@
 # generated files
 /Karmawhore/bin/
 /Karmawhore/gen/
+/KarmawhoreTest/bin/
+/KarmawhoreTest/gen/
 .metadata/
 
 # Local configuration file (sdk path, etc)

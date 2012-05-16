@@ -20,6 +20,8 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 
+import android.util.Log;
+
 public final class NetworkUtil {
 	/** POST parameter name for the user's account name */
     public static final String PARAM_USERNAME = "username";
@@ -39,6 +41,8 @@ public final class NetworkUtil {
     public static final String AUTH_URI = BASE_URL + "/auth/login/1";
     /** URI for sync service */
     public static final String SYNC_CONTACTS_URI = BASE_URL + "/sync";
+    /** Tag for logging */
+	private static final String TAG = "Networking";
     
     private NetworkUtil(){
     }
@@ -64,9 +68,11 @@ public final class NetworkUtil {
     		throw new IllegalStateException(e);
     	}
     	final HttpPost post = new HttpPost(AUTH_URI);
+    	Log.d(TAG, "Server: " + AUTH_URI);
     	post.addHeader(entity.getContentType());
     	post.setEntity(entity);
     	try {
+    		Log.d(TAG, "Attempting to authenticate " + username + "...");
     		resp = getHttpClient().execute(post);
     		String authToken = null;
     		if(resp.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
@@ -76,9 +82,12 @@ public final class NetworkUtil {
     				authToken = ireader.readLine().trim();
     			}
     		}
+    		Log.d(TAG, "Server says: " + resp.getStatusLine().getReasonPhrase());
     		if ((authToken != null) && (authToken.length() > 0)){
+    			Log.d(TAG, "Server gives: \""+authToken+"\"");
     			return authToken;
     		}else {
+    			Log.d(TAG, "Server gives nothing :(");
     			return null;
     		}
     	} catch (final IOException e) {

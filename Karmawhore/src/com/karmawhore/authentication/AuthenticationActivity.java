@@ -18,6 +18,7 @@ import android.provider.ContactsContract;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -43,6 +44,8 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity {
 	/** The Intent extra to store username. */
 	public static final String PARAM_USERNAME = "username";
 
+	private static final String TAG = "Authentication Activity";
+	
 	/** The Intent extra to store username. */
 	public static final String PARAM_AUTHTOKEN_TYPE = "authtokenType";
 
@@ -204,12 +207,14 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity {
 		mAuthTask = null;
 
 		if (successfull) {
+			Log.d(TAG, "Success!");
 			if (!mConfirmCredentials) {
 				finishLogin(authToken);
 			} else {
 				finishConfirmCredentials(successfull);
 			}
 		} else {
+			Log.d(TAG, "Failed. :(");
 			if (mRequestNewAccount) {
 				// They tried to create a new account with incorrect deets
 				mMessage.setText("YOU GOT IT WRONG"); // TODO: externalise
@@ -230,10 +235,13 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity {
 
 	public class UserLoginTask extends AsyncTask<Void, Void, String> {
 
+		
+
 		@Override
 		protected String doInBackground(Void... params) {
 			// Authenticate the user in another class
 			try{
+				Log.d(TAG, "Beginning authentication...");
 			return NetworkUtil.authenticate(mUsername, mPassword);
 			} catch (Exception e){
 				return null;
