@@ -34,9 +34,9 @@ public final class NetworkUtil {
     /** Timeout (in ms) we specify for each http request */
     public static final int HTTP_REQUEST_TIMEOUT_MS = 30 * 1000;
     /** Base URL for the v2 Sample Sync Service */
-    public static final String BASE_URL = "https://samplesyncadapter2.appspot.com";
+    public static final String BASE_URL = "http://alpha.roarc.co.uk/karmawhore/index.php";
     /** URI for authentication service */
-    public static final String AUTH_URI = BASE_URL + "/auth";
+    public static final String AUTH_URI = BASE_URL + "/auth/login/1";
     /** URI for sync service */
     public static final String SYNC_CONTACTS_URI = BASE_URL + "/sync";
     

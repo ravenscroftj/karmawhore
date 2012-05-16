@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="karmawhore_light">#AA66CC</color>
+    <color name="karmawhore_dark">#9933CC</color>
+
+    <style name="KarmawhoreTheme" parent="android:Theme.Holo.Light.DarkActionBar">
+        <item name="android:colorPressedHighlight">@color/karmawhore_light</item>
+        <item name="android:textColorLink">@color/karmawhore_light</item>
+        <item name="android:textColorLinkInverse">@color/karmawhore_light</item>
+        <item name="android:textColorHighlightInverse">@color/karmawhore_light</item>
+        <item name="android:textColorHighlight">@color/karmawhore_light</item>
+        <item name="android:colorFocusedHighlight">@color/karmawhore_dark</item>
+        <item name="android:colorActivatedHighlight">@color/karmawhore_dark</item>
+    </style>
+
+</resources>

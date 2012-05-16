@@ -3,6 +3,8 @@
  */
 package com.karmawhore.authentication;
 
+import java.util.regex.Pattern;
+
 import android.accounts.Account;
 import android.accounts.AccountAuthenticatorActivity;
 import android.accounts.AccountManager;
@@ -12,12 +14,15 @@ import android.content.ContentResolver;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.provider.ContactsContract;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.ViewSwitcher;
 
 import com.karmawhore.Constants;
 import com.karmawhore.R;
@@ -46,18 +51,12 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity {
 	/** Keep track of the login task so can cancel it if requested */
 	private UserLoginTask mAuthTask = null;
 
-	/** Keep track of the progress dialog so we can dismiss it */
-	private ProgressDialog mProgressDialog = null;
-
 	/**
 	 * If set we are just checking that the user knows their credentials; this
 	 * doesn't cause the user's password or authToken to be changed on the
 	 * device.
 	 */
 	private Boolean mConfirmCredentials = false;
-
-	/** for posting authentication attempts back to UI thread */
-	private final Handler mHandler = new Handler();
 
 	private TextView mMessage;
 
@@ -71,6 +70,10 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity {
 	private String mUsername;
 
 	private EditText mUsernameEdit;
+	
+	private ViewSwitcher mViewSwitcher;
+	
+	private Button mSigninButton;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -92,7 +95,50 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity {
 		if (!TextUtils.isEmpty(mUsername))
 			mUsernameEdit.setText(mUsername);
 		mMessage.setText(getMessage());
+		mViewSwitcher = (ViewSwitcher) findViewById(R.id.login_view_switcher);
 
+		mUsernameEdit.addTextChangedListener(isValid());
+		mPasswordEdit.addTextChangedListener(isValid());
+		
+		mSigninButton = (Button) findViewById(R.id.login_button_ok);
+		
+	}
+	
+	public final Pattern EMAIL_ADDRESS_PATTERN = Pattern.compile(
+	          "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" +
+	          "\\@" +
+	          "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" +
+	          "(" +
+	          "\\." +
+	          "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
+	          ")+"
+	      );
+	
+	private TextWatcher isValid(){
+		TextWatcher fieldValidator = new TextWatcher(){
+
+			public void afterTextChanged(Editable s) {
+				
+			}
+
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+				
+			}
+
+			public void onTextChanged(CharSequence s, int start, int before,
+					int count) {
+				
+				if(EMAIL_ADDRESS_PATTERN.matcher(mUsernameEdit.getText()).matches() && mPasswordEdit.getText().length()>6){
+					mSigninButton.setEnabled(true);
+				} else {
+					mSigninButton.setEnabled(false);
+				}
+				
+			}};
+		
+		return fieldValidator;
+		
 	}
 
 	@Override
@@ -110,7 +156,7 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity {
 			mMessage.setText(getMessage());
 		} else {
 			// Kick off the background task
-			// TODO: some kinda progress
+			mViewSwitcher.showNext();
 			mAuthTask = new UserLoginTask();
 			mAuthTask.execute();
 		}
@@ -154,6 +200,7 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity {
 	private void onAuthenticationResult(String authToken) {
 		boolean successfull = ((authToken != null) && (authToken.length() > 0));
 
+		mViewSwitcher.showPrevious();
 		mAuthTask = null;
 
 		if (successfull) {
@@ -175,6 +222,7 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity {
 	}
 
 	private void onAuthenticationCancel() {
+		mViewSwitcher.showPrevious();
 		mAuthTask = null;
 	}
 	
