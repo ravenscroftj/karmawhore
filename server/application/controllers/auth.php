@@ -45,6 +45,7 @@ class Auth extends CI_Controller {
 			if($result){
 				print $this->db_session->userdata('session_id');
 			}else{
+				$this->output->set_status_header('401');
 				print "Unknown user/password combination.";
 			}
 		
