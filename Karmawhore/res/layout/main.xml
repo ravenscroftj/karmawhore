@@ -4,11 +4,19 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Probably logged in."
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+    <fragment
+        android:id="@+id/stats_fragment"
+        android:name="com.karmawhore.activities.UserStatsFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <!-- Preview: layout=@layout/stats -->
+    </fragment>
+
+    <fragment
+        android:id="@+id/user_list_instance"
+        android:name="com.karmawhore.activities.UserListFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

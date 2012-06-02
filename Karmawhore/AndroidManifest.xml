@@ -16,7 +16,7 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/appname" android:theme="@style/KarmawhoreTheme">
         <activity
-            android:name=".activities.MainActivity"
+            android:name=".activities.UserListActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
