@@ -1,5 +1,6 @@
 package com.karmawhore.activities;
 
+import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.app.Activity;
 import android.os.Bundle;
@@ -30,7 +31,13 @@ public class MainActivity extends Activity {
 	}
 
 	private boolean isSignedIn() {
-		// TODO Auto-generated method stub
-		return false;
+		AccountManager accountManager = AccountManager.get(getApplicationContext());
+		
+		Account[] accounts = accountManager.getAccountsByType(Constants.ACCOUNT_TYPE);
+		if(accounts.length >= 1){
+			return true;
+		} else {
+			return false;
+		}
 	}
 }

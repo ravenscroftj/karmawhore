@@ -3,5 +3,12 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Probably logged in."
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
 </LinearLayout>
